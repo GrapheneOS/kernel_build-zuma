@@ -415,6 +415,12 @@ def kernel_build(
           (e.g. `kasan_defconfig`) or `<prop>_<value>_defconfig` (e.g. `lto_none_defconfig`)
           to provide human-readable hints during the build. The prefix should
           describe what the defconfig does. However, this is not a requirement.
+
+          **NOTE**: `defconfig_fragments` are applied **after** `make defconfig`, similar
+          to `POST_DEFCONFIG_CMDS`. If you migrate from `PRE_DEFCONFIG_CMDS`
+          to `defconfig_fragments`, certain values may change; double check
+          by building the `<target_name>_config` target and examining the
+          generated `.config` file.
         page_size: Default is `"default"`. Page size of the kernel build.
 
           Value may be one of `"default"`, `"4k"`, `"16k"` or `"64k"`. If

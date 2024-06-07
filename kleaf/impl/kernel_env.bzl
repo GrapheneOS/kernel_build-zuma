@@ -308,13 +308,14 @@ def _kernel_env_impl(ctx):
            if [ -n "${{DTSTREE_MAKEFILE}}" ]; then
              export dtstree=$(realpath -s $(dirname ${{DTSTREE_MAKEFILE}}) --relative-to ${{ROOT_DIR}}/${{KERNEL_DIR}})
            fi
-         # Set up KCPPFLAGS
+         # Set up KCPPFLAGS and KCPPFLAGS_COMPAT
          # For Kleaf local (non-sandbox) builds, $ROOT_DIR is under execroot but
          # $ROOT_DIR/$KERNEL_DIR is a symlink to the real source tree under
          # workspace root, making $abs_srctree not under $ROOT_DIR.
            if [[ "$(realpath ${{ROOT_DIR}}/${{KERNEL_DIR}})" != "${{ROOT_DIR}}/${{KERNEL_DIR}}" ]]; then
              export KCPPFLAGS="$KCPPFLAGS -ffile-prefix-map=$(realpath ${{ROOT_DIR}}/${{KERNEL_DIR}})/="
            fi
+           export KCPPFLAGS_COMPAT="$KCPPFLAGS"
            """.format(
         env = out_file.path,
         build_utils_sh = ctx.file._build_utils_sh.path,

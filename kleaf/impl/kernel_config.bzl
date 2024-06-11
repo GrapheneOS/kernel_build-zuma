@@ -613,6 +613,7 @@ def _kernel_config_impl(ctx):
                 file = file.path,
                 basename = file.basename,
             )
+            post_setup_deps.append(file)
 
     post_setup = """
            [ -z ${{OUT_DIR}} ] && echo "FATAL: configs post_env_info setup run without OUT_DIR set!" >&2 && exit 1
